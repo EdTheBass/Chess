@@ -544,13 +544,12 @@ function isMated(colour) {
     var team = (colour == "w") ? white : black;
     var opp = (colour == "w") ? black : white;
 
-    for (pieceI in team) {
+    for (var pieceI=0; pieceI<team.length; pieceI++) {
         for (var i=0; i<8; i++) {
             for (var j=0; j<8; j++) {       
                 let currentPiece = team[pieceI];
                 
                 let bPos = s2b(i, j);
-
                 if (currentPiece.move(bPos[0], bPos[1])) {
                     let replacedPiece = board[bPos[0]][bPos[1]];
                     let oldX = currentPiece.x;
