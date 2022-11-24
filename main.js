@@ -686,6 +686,8 @@ addEventListener("mousedown", (event) => {
                     
                     if (board[sX][sY].move(bPos[0], bPos[1])) {
                         executeMove(sX, sY, bPos);
+						
+						go = (go == "w") ? "b" : "w";
 
                         animatedPiece = board[bPos[0]][bPos[1]];
                         let targetCoord = cellToCoord(bPos[0], bPos[1]);
@@ -706,6 +708,10 @@ addEventListener("mousedown", (event) => {
                     selectedCell = [-1,-1];
                 } else {
                     selectedCell = s2b(i,j);
+					
+					if (board[selectedCell[0]][selectedCell[1]].colour != go) {
+						return;
+					}
 
                     if (board[selectedCell[0]][selectedCell[1]]) { 
                         isCellSelected = true;
@@ -717,6 +723,8 @@ addEventListener("mousedown", (event) => {
         }
     }
 });
+
+var go = "w";
 
 function loop() {
     drawGrid();
