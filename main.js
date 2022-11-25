@@ -685,9 +685,42 @@ addEventListener("mousedown", (event) => {
                     bPos = s2b(i,j)
                     
                     if (board[sX][sY].move(bPos[0], bPos[1])) {
+                        let currentPiece = board[sX][sY];
+                        let replacedPiece = board[bPos[0]][bPos[1]];
+                        let oldX = currentPiece.x;
+                        let opp = (go == "w") ? black : white;
+                        let oldY = currentPiece.y;
                         executeMove(sX, sY, bPos);
 						
-						go = (go == "w") ? "b" : "w";
+                        if (isChecked("w")) {
+                            if (go == "b")
+                                console.log(`White checkmate: ${isMated("w")}`);
+                            else {
+                                if (replacedPiece) {
+                                    opp.push(replacedPiece);
+                                }
+                                board[bPos[0]][bPos[1]] = replacedPiece;
+                                board[oldX][oldY] = currentPiece;
+                                currentPiece.x = oldX;
+                                currentPiece.y = oldY;
+                                return;
+                            }
+                        }
+
+                        if (isChecked("b")) {
+                            if (go == "w")
+                                console.log(`Black checkmate: ${isMated("b")}`);
+                            else {
+                                if (replacedPiece) {
+                                    opp.push(replacedPiece);
+                                }
+                                board[bPos[0]][bPos[1]] = replacedPiece;
+                                board[oldX][oldY] = currentPiece;
+                                currentPiece.x = oldX;
+                                currentPiece.y = oldY;
+                                return;
+                            }
+                        }
 
                         animatedPiece = board[bPos[0]][bPos[1]];
                         let targetCoord = cellToCoord(bPos[0], bPos[1]);
@@ -695,13 +728,8 @@ addEventListener("mousedown", (event) => {
                         animationX = targetCoord[0] - currCoord[0];
                         animationY = targetCoord[1] - currCoord[1];
 
-                        if (isChecked("w")) {
-                            console.log(`White checkmate: ${isMated("w")}`);
-                        }
-
-                        if (isChecked("b")) {
-                            console.log(`Black checkmate: ${isMated("b")}`);
-                        }
+                        
+					    go = (go == "w") ? "b" : "w";
                     }
 
                     isCellSelected = false;
