@@ -555,7 +555,7 @@ function isMated(colour) {
                     let oldX = currentPiece.x;
                     let oldY = currentPiece.y;
                     
-                    executeMove(currentPiece.x, currentPiece.y, bPos);
+                    executeMove(currentPiece.x, currentPiece.y, bPos, true);
 
                     if (!isChecked(colour)) {
                         checkmate = false;
@@ -630,8 +630,8 @@ function drawBoard() {
     }
 }
 
-function executeMove(sX, sY, bPos) {
-    if (board[sX][sY].moved != undefined) {
+function executeMove(sX, sY, bPos, mateTest=false) {
+    if (board[sX][sY].moved != undefined && !mateTest) {
         board[sX][sY].moved = true;
     }
     
@@ -763,4 +763,5 @@ function loop() {
 }
 
 initiateBoard();
+console.log(Object.keys(board[0][0]))
 loop();
